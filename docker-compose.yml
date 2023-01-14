@@ -6,7 +6,7 @@ x-common-variables: &common-variables
   RABBIT_PORT: 5672
   RABBIT_HOST_IP: 172.17.0.1
 
-  BOT_TOKEN: <input bot token>
+  BOT_TOKEN: 5253255818:AAGQnsdbrLDcJ_3_X-CPP4oDoR0EpWGv3wI
   BOT_NAME: koTorrentBot
 
   LONG_PAUSE_MILIS: 10000
@@ -30,7 +30,10 @@ services:
       - 5672:5672
       - 15672:15672
   bot:
-    image: halushko/cinema-bot:0.1-pi
+#    image: halushko/cinema-bot:0.1-pi
+    build:
+      context: .
+      dockerfile: ./config/dockerfiles/Dockerfile-bot
     environment: *common-variables
     restart: always
     container_name: "bot"
@@ -42,14 +45,20 @@ services:
           cpus: '1'
           memory: 256Mb
   text_handler:
-    image: halushko/cinema-text:0.1-pi
+#    image: halushko/cinema-text:0.1-pi
+    build:
+      context: .
+      dockerfile: ./config/dockerfiles/Dockerfile-text
     environment: *common-variables
     restart: always
     container_name: "text_handler"
     depends_on:
       - rabbitmq
   file_handler:
-    image: halushko/cinema-file:0.1-pi
+#    image: halushko/cinema-file:0.1-pi
+    build:
+      context: .
+      dockerfile: ./config/dockerfiles/Dockerfile-file
     environment: *common-variables
     restart: always
     container_name: "file_handler"
@@ -58,7 +67,10 @@ services:
     volumes:
       - ./workdir/mediadata/torrent/torrent_files:/home/torrent_files/
   torrent:
-    image: halushko/cinema-torrent:0.1-pi
+#    image: halushko/cinema-torrent:0.1-pi
+    build:
+      context: .
+      dockerfile: ./config/dockerfiles/Dockerfile-torrent
     environment: *common-variables
     restart: always
     container_name: "torrent"
@@ -78,7 +90,10 @@ services:
           memory: 1G
   minidlna:
     container_name: "minidlna"
-    image: halushko/cinema-media:0.1-pi
+#    image: halushko/cinema-media:0.1-pi
+    build:
+      context: .
+      dockerfile: ./config/dockerfiles/Dockerfile-minidlna
     restart: always
     environment:  *common-variables
     depends_on:
@@ -86,9 +101,9 @@ services:
     volumes:
       - ./workdir/mediadata/torrent/complete:/home/media/
     network_mode: host
-    ports:
-      - 8200:8200
-      - 1900:1900/udp
+#    ports:
+#      - 8200:8200
+#      - 1900:1900/udp
     deploy:
       resources:
         limits:

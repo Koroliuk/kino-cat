@@ -3,7 +3,7 @@ RUN mkdir -p /home/git/code
 RUN cd /home/git/code && \
     git init kino-cat && \
     cd kino-cat && \
-    git remote add origin https://github.com/halushko/kino-cat.git && \
+    git remote add origin https://github.com/Koroliuk/kino-cat.git && \
     git config core.sparseCheckout true && \
     echo "middleware/" >> .git/info/sparse-checkout && \
     echo "minidlna/" >> .git/info/sparse-checkout && \
