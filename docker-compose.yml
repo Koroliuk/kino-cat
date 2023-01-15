@@ -30,7 +30,7 @@ services:
       - 5672:5672
       - 15672:15672
   bot:
-    image: halushko/cinema-bot:0.1-pi
+    image: halushko/cinema-bot:0.1
     environment: *common-variables
     restart: always
     container_name: "bot"
@@ -42,14 +42,14 @@ services:
           cpus: '1'
           memory: 256Mb
   text_handler:
-    image: halushko/cinema-text:0.1-pi
+    image: halushko/cinema-text:0.1
     environment: *common-variables
     restart: always
     container_name: "text_handler"
     depends_on:
       - rabbitmq
   file_handler:
-    image: halushko/cinema-file:0.1-pi
+    image: halushko/cinema-file:0.1
     environment: *common-variables
     restart: always
     container_name: "file_handler"
@@ -58,7 +58,7 @@ services:
     volumes:
       - ./workdir/mediadata/torrent/torrent_files:/home/torrent_files/
   torrent:
-    image: halushko/cinema-torrent:0.1-pi
+    image: halushko/cinema-torrent:0.1
     environment: *common-variables
     restart: always
     container_name: "torrent"
