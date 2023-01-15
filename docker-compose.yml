@@ -30,10 +30,7 @@ services:
       - 5672:5672
       - 15672:15672
   bot:
-#    image: halushko/cinema-bot:0.1-pi
-    build:
-      context: .
-      dockerfile: ./config/dockerfiles/Dockerfile-bot
+    image: halushko/cinema-bot:0.1-pi
     environment: *common-variables
     restart: always
     container_name: "bot"
@@ -45,20 +42,14 @@ services:
           cpus: '1'
           memory: 256Mb
   text_handler:
-#    image: halushko/cinema-text:0.1-pi
-    build:
-      context: .
-      dockerfile: ./config/dockerfiles/Dockerfile-text
+    image: halushko/cinema-text:0.1-pi
     environment: *common-variables
     restart: always
     container_name: "text_handler"
     depends_on:
       - rabbitmq
   file_handler:
-#    image: halushko/cinema-file:0.1-pi
-    build:
-      context: .
-      dockerfile: ./config/dockerfiles/Dockerfile-file
+    image: halushko/cinema-file:0.1-pi
     environment: *common-variables
     restart: always
     container_name: "file_handler"
@@ -67,10 +58,7 @@ services:
     volumes:
       - ./workdir/mediadata/torrent/torrent_files:/home/torrent_files/
   torrent:
-#    image: halushko/cinema-torrent:0.1-pi
-    build:
-      context: .
-      dockerfile: ./config/dockerfiles/Dockerfile-torrent
+    image: halushko/cinema-torrent:0.1-pi
     environment: *common-variables
     restart: always
     container_name: "torrent"
@@ -90,7 +78,6 @@ services:
           memory: 1G
   minidlna:
     container_name: "minidlna"
-#    image: halushko/cinema-media:0.1-pi
     build:
       context: .
       dockerfile: ./config/dockerfiles/Dockerfile-minidlna
@@ -101,9 +88,6 @@ services:
     volumes:
       - ./workdir/mediadata/torrent/complete:/home/media/
     network_mode: host
-#    ports:
-#      - 8200:8200
-#      - 1900:1900/udp
     deploy:
       resources:
         limits:
